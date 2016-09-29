@@ -3,14 +3,18 @@
     #include<string>
     #include<vector>
     #include<algorithm>
-    #include <stdlib.h>
+    #include<stdlib.h>
+    #include<sstream>
     using namespace std;
 
+    void everything(char c,float f_num){
+      cout<<c<<"_"<<f_num<<endl;
+    }
 
-	float everything(char c,float num){
-		cout<<"I set:"<<c<<" "<<num<<endl;
-		return 0.0;
-	}
+    bool setHead(int num){
+      cout<<"I set the head:..."<<num<<endl;
+      return true;
+    }
 
     float getXchord(float x){
       return 0;
@@ -18,39 +22,76 @@
 
     float setXchord(float x){
       cout<<"Setup the X chord:"<<x;
-      while(x-getXchord(x)){
-      }
+      //while(x-getXchord(x)){
+      //}
       cout<<"done"<<endl;
       return getXchord(x);
     }
 
+
+
+    float getYchord(float x){
+      return 0;
+    }
+
+    float setYchord(float x){
+      cout<<"Setup the Y chord:"<<x;
+      //while(x-getYchord(x)){
+      //}
+      cout<<"done"<<endl;
+      return getYchord(x);
+    }
+
+
+    float getZchord(float x){
+      return 0;
+    }
+
+    float setZchord(float x){
+      cout<<"Setup the Y chord:"<<x;
+      //while(x-getZchord(x)){
+      //}
+      cout<<"done"<<endl;
+      return getZchord(x);
+    }
+
+
+
     bool interpreter(string gline){
-      int j=0;
+      int j=-1;
       int i=0;
       cout<<gline<<endl;
       for(i=0;i<=gline.size();i++){
         if(gline[i]==' ' || gline[i]=='\0' ){
-          string tmp(gline,j+1,i-1);
+          string tmp(gline,j+1,i);
           transform(tmp.begin(), tmp.end(), tmp.begin(),(int (*)(int))tolower);
-          //cout<<"tmp value:"<<tmp<<" i:"<<i<<" j:"<<j<<endl;
-          string num(tmp,1,tmp.size());
+          string num(tmp,1,tmp.size()-1);
           float f_num;
-          string::size_type sz;
-          f_num= atof(num.c_str());
-          cout<<f_num<<" "<<endl;
-	  switch(gline[j]){
-		case 'x':
-			setXchord(f_num);
-			break;
-        	default:
-			everything(gline[j+1],f_num);
-			break;
-	}
-	j=i;
+        //  f_num= atof(num.c_str());
+          stringstream(num) >> f_num;
+          cout<<tmp[j+1]<<endl;
+          switch(tmp[j+1]){
+		          case 'x':
+			              setXchord(f_num);
+			              break;
+              case 'y':
+  			            setYchord(f_num);
+  			            break;
+              case 'z':
+    			          setZchord(f_num);
+    			          break;
+              case 'g':
+                    setHead(f_num);
+                    break;
+              default:
+			              everything(gline[j+1],f_num);
+			              break;
+	      }
+	      j=i;
       }
     }
-      return 0;
-    }
+  return 0;
+}
 
     int main(){
 
